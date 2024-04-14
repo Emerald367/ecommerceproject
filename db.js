@@ -14,7 +14,8 @@ function connectToDb() {
                 console.log('Error connecting to the database', err);
                 reject(err);
             } else {
-                console.log('Connection Successful, Server Time:', res.rows[0].now)
+                console.log('Connection Successful, Server Time:', res.rows[0].now);
+                resolve(res.rows[0].now);
             }
         });
     });
