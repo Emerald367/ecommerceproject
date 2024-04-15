@@ -1,0 +1,8 @@
+POST http://localhost:5000/register
+Content-type: application/json 
+
+{
+    "password": "password",
+    "email": "googly567@yaymail.com",
+    "shippingAddress": " 489 LOL Street"
+}
