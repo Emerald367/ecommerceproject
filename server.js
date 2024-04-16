@@ -5,6 +5,7 @@ const db = require('./db')
 const env = require('dotenv').config
 const {pool, connectToDb} = require('./db.js')
 const bcrypt = require('bcrypt')
+const expSession = require('express-session')
 const PORT = 5000;
 
 connectToDb()
@@ -62,6 +63,15 @@ app.post('/login', async (req, res) => {
 
 
     });
+
+
+
+
+
+
+
+
+
 
 module.exports = app;
 
