@@ -6,6 +6,12 @@ const env = require('dotenv').config
 const {pool, connectToDb} = require('./db.js')
 const bcrypt = require('bcrypt')
 const expSession = require('express-session')
+app.use(expSession({
+    secret: process.env.SECRET_KEY,
+    resave: false,
+    saveUninitialized: false
+}))
+
 const PORT = 5000;
 
 connectToDb()
@@ -52,7 +58,11 @@ app.post('/login', async (req, res) => {
     if (result.rows.length > 0) {
         let hashedPasswordFromDB = result.rows[0].hashedpassword;
         let isMatch = await bcrypt.compare(password, hashedPasswordFromDB);
+        let user = result.rows[0]
+        delete user.hashedpassword
+        console.log(user)
         if (isMatch) {
+         req.session.userID = user.userid
          res.status(200).send('Matching Passwords')
         } else {
          res.status(403).send('Incorrect Password')
