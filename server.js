@@ -37,6 +37,31 @@ app.post('/register', async (req, res) => {
 }
 });
 
+app.post('/login', async (req, res) => {
+    const userID = req.body.userID;
+    const password = req.body.password;
+
+    const getPasswordQuery = 'SELECT * FROM users WHERE UserID = $1';
+
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    let result = await pool.query(getPasswordQuery, [userID]);
+
+    if (result.rows.length > 0) {
+        let hashedPasswordFromDB = result.rows[0].hashedpassword;
+        let isMatch = await bcrypt.compare(password, hashedPasswordFromDB);
+        if (isMatch) {
+         res.status(200).send('Matching Passwords')
+        } else {
+         res.status(403).send('Incorrect Password')
+        }
+    } else {
+        res.status(404).send('User not found');
+    }
+
+
+    });
 
 module.exports = app;
 

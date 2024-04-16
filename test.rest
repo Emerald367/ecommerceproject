@@ -6,3 +6,13 @@ Content-type: application/json
     "email": "googly567@yaymail.com",
     "shippingAddress": " 489 LOL Street"
 }
+
+###
+
+POST http://localhost:5000/login
+Content-type: application/json 
+
+{
+    "userID": 1,
+    "password": "password"
+}
