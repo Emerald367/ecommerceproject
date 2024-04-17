@@ -83,7 +83,7 @@ app.get('/users/:id', async (req, res) => {
         }
     })
 
-app.post('/products', async (req, res)=> {
+app.post('/products', async (req, res) => {
     const productName = req.body.productName;
     const productDesc = req.body.productDesc;
     const productPrice = req.body.productPrice;
@@ -105,6 +105,18 @@ app.post('/products', async (req, res)=> {
         }
     }
 })
+
+
+app.get('/products', async (req, res) => {
+    const allProductsQuery = 'SELECT * FROM products'
+    const result = await pool.query(allProductsQuery)
+    if (result.rows.length > 0) {
+        res.json({products: result.rows, message: 'All Products Received'})
+    } else {
+        res.status(404).send('No Products Found')
+    }
+})
+
 
 
 

@@ -26,7 +26,10 @@ POST http://localhost:5000/products
 Content-type: application/json
 
 {
-    "productName": "PC",
-    "productDesc": "Personal Computer",
-    "productPrice": 500.25
+    "productName": "iPhone 25",
+    "productDesc": "Smartphone of the Future",
+    "productPrice": 150.66
 }
+
+###
+GET http://localhost:5000/products
