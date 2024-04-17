@@ -16,3 +16,7 @@ Content-type: application/json
     "userID": 1,
     "password": "password"
 }
+
+###
+
+GET http://localhost:5000/users/1

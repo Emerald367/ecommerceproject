@@ -60,7 +60,6 @@ app.post('/login', async (req, res) => {
         let isMatch = await bcrypt.compare(password, hashedPasswordFromDB);
         let user = result.rows[0]
         delete user.hashedpassword
-        console.log(user)
         if (isMatch) {
          req.session.userID = user.userid
          res.status(200).send('Matching Passwords')
@@ -73,6 +72,16 @@ app.post('/login', async (req, res) => {
 
 
     });
+
+app.get('/users/:id', async (req, res) => {
+        if (req.session.userID) {
+            const userDataQuery = 'SELECT UserId, EmailAddress, ShippingAddress FROM users WHERE UserId = $1'
+            const result= await pool.query(userDataQuery, [req.params.id])
+            res.json({ profile: result.rows[0], message: 'User Profile Received'});
+        } else {
+            res.status(404).send('Session not created')
+        }
+    })
 
 
 
