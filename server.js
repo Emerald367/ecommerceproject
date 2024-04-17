@@ -83,7 +83,28 @@ app.get('/users/:id', async (req, res) => {
         }
     })
 
+app.post('/products', async (req, res)=> {
+    const productName = req.body.productName;
+    const productDesc = req.body.productDesc;
+    const productPrice = req.body.productPrice;
+    
+    const checkProductQuery = 'SELECT * FROM products WHERE LOWER(ProductName) = LOWER($1)'
+    const result = await pool.query(checkProductQuery, [productName])
 
+    if (result.rows.length > 0) {
+        res.status(400).send('Product already created')
+    } else {
+        const query = 'INSERT INTO products (ProductName, ProductDescription, ProductPrice) VALUES ($1, $2, $3)'
+        const values = [productName, productDesc, productPrice]
+        try {
+            await pool.query(query, values);
+            res.status(200).send('Product Created');
+        } catch (err) {
+           console.error(err);
+           res.status(500).send('Server error')
+        }
+    }
+})
 
 
 

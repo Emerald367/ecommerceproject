@@ -20,3 +20,13 @@ Content-type: application/json
 ###
 
 GET http://localhost:5000/users/1
+
+###
+POST http://localhost:5000/products
+Content-type: application/json
+
+{
+    "productName": "PC",
+    "productDesc": "Personal Computer",
+    "productPrice": 500.25
+}
