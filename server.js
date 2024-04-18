@@ -117,6 +117,15 @@ app.get('/products', async (req, res) => {
     }
 })
 
+app.get('/products/:id', async (req, res) => {
+    const specificProductQuery = 'SELECT * FROM products WHERE ProductID = $1'
+    const result = await pool.query(specificProductQuery, [req.params.id])
+    if (result.rows.length > 0) {
+        res.json({product: result.rows, message: 'Product Found'})
+    } else {
+        res.status(404).send('Product Found')
+    }
+})
 
 
 
