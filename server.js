@@ -127,6 +127,22 @@ app.get('/products/:id', async (req, res) => {
     }
 })
 
+app.put('/products/:id', async (req, res) => {
+    const id = req.params.id;
+    const updatedName = req.body.updatedName;
+    const updatedPrice = req.body.updatedPrice;
+    const updatedDesc = req.body.updatedDesc;
+    const updateProductQuery = 'UPDATE products SET ProductPrice = $1, ProductDescription = $2, ProductName = $3 WHERE ProductID = $4 RETURNING *'
+    const values = [updatedPrice, updatedDesc, updatedName, id]
+    const result = await pool.query(updateProductQuery, values)
+
+    if (result.rows.length > 0) {
+        res.status(200).send('Product Updated')
+    } else {
+        res.status(404).send('No Product Found')
+    }
+})
+
 
 
 

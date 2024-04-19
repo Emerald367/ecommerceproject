@@ -37,3 +37,13 @@ GET http://localhost:5000/products
 ###
 
 GET http://localhost:5000/products/1
+
+###
+PUT http://localhost:5000/products/3
+Content-type: application/json
+
+{
+    "updatedName": "Graphing Calculator",
+    "updatedDesc": "beep beep DING!",
+    "updatedPrice": 30.87
+}
