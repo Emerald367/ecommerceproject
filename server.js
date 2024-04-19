@@ -143,6 +143,18 @@ app.put('/products/:id', async (req, res) => {
     }
 })
 
+app.delete('/products/:id', async (req, res) => {
+    const deleteProductQuery = 'DELETE FROM products WHERE ProductID = $1'
+    const result = await pool.query(deleteProductQuery, [req.params.id])
+
+    if (result.rowCount > 0) {
+        res.status(200).send('Product Deleted')
+    } else {
+        res.status(404).send('No Product Found')
+    }
+
+})
+
 
 
 

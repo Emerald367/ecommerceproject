@@ -47,3 +47,6 @@ Content-type: application/json
     "updatedDesc": "beep beep DING!",
     "updatedPrice": 30.87
 }
+
+###
+DELETE http://localhost:5000/products/3 
