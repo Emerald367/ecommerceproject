@@ -156,6 +156,22 @@ app.delete('/products/:id', async (req, res) => {
 })
 
 
+app.post('/orders', async (req, res) => {
+    const userID = req.body.userID;
+    const productID = req.body.productID;
+    const quantity = req.body.quantity;
+    const price = req.body.price;
+    const paymentDetails = req.body.paymentDetails;
+    const shippingAddress = req.body.shippingAddress;
+
+    for (let i = 0; i < req.body.products.length; i++) {
+        const createOrderQuery = 'INSERT INTO orderitems (ProductID, Quantity, Price) VALUES ($1, $2, $3)'
+        const values = [productID, quantity, price];
+    }
+
+
+})
+
 
 
 
