@@ -5,6 +5,8 @@ const db = require('./db')
 const env = require('dotenv').config
 const {pool, connectToDb} = require('./db.js')
 const bcrypt = require('bcrypt')
+const stripe = require('stripe')
+(process.env.STRIPE_SECRET_KEY)
 const expSession = require('express-session')
 app.use(expSession({
     secret: process.env.SECRET_KEY,
@@ -163,11 +165,17 @@ app.post('/orders', async (req, res) => {
     const price = req.body.price;
     const paymentDetails = req.body.paymentDetails;
     const shippingAddress = req.body.shippingAddress;
+    
 
     for (let i = 0; i < req.body.products.length; i++) {
         const createOrderQuery = 'INSERT INTO orderitems (ProductID, Quantity, Price) VALUES ($1, $2, $3)'
         const values = [productID, quantity, price];
+        await pool.query(createOrderQuery, values)
     }
+
+    const createOrderDetailsQuery = 'INSERT INTO orders (UserID, PaymentDetails, ShippingAddress) VALUES ($1, $2, $3)'
+    const orderDetailValues = [userID, paymentDetails, shippingAddress]
+    await pool.query(createOrderDetailsQuery, orderDetailValues)
 
 
 })
