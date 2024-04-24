@@ -5,15 +5,12 @@ const db = require('./db')
 const env = require('dotenv').config
 const {pool, connectToDb} = require('./db.js')
 const bcrypt = require('bcrypt')
-const stripe = require('stripe')
-(process.env.STRIPE_SECRET_KEY)
 const expSession = require('express-session')
 app.use(expSession({
     secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: false
 }))
-
 const PORT = 5000;
 
 connectToDb()
