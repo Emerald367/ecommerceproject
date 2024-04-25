@@ -156,23 +156,45 @@ app.delete('/products/:id', async (req, res) => {
 
 
 app.post('/orders', async (req, res) => {
-    const userID = req.body.userID;
-    const productID = req.body.productID;
-    const quantity = req.body.quantity;
-    const price = req.body.price;
-    const paymentDetails = req.body.paymentDetails;
-    const shippingAddress = req.body.shippingAddress;
-    
+    if (req.session.userID) {
 
-    for (let i = 0; i < req.body.products.length; i++) {
-        const createOrderQuery = 'INSERT INTO orderitems (ProductID, Quantity, Price) VALUES ($1, $2, $3)'
-        const values = [productID, quantity, price];
-        await pool.query(createOrderQuery, values)
+        try {
+            await pool.query('BEGIN')
+
+        const userID = req.body.userID;
+        const paymentDetails = req.body.paymentDetails;
+
+        const OrderDetailsQuery = 'INSERT INTO orders (UserID) VALUES ($1) RETURNING OrderID'
+        const orderDetailValues = [userID]
+        const result = await pool.query(OrderDetailsQuery, orderDetailValues)
+
+        const saltRounds = 10
+        const encryptedPaymentDetails = await bcrypt.hash(paymentDetails, saltRounds)
+        const paymentInfoQuery = 'INSERT INTO paymentinfo (UserID, PaymentMethodDetails) VALUES ($1, $2)'
+        const paymentValue = [userID, encryptedPaymentDetails]
+        await pool.query(paymentInfoQuery, paymentValue)
+
+        const products = req.body.products
+
+        for (let i = 0; i < products.length; i++) {
+            const productID = products[i].productID
+            const quantity = products[i].quantity
+            const price = products[i].price
+            const orderID = result.rows[0].OrderID
+            const orderItemsQuery = 'INSERT INTO orderitems (ProductID, Quantity, Price, OrderID) VALUES ($1, $2, $3, $4) RETURNING OrderID'
+            const values = [productID, quantity, price, orderID];
+            await pool.query(orderItemsQuery, values)
+        }
+
+           await pool.query('COMMIT')
+        res.status(200).send('Order Created')
+
+        } catch (err) {
+            await pool.query('ROLLBACK')
+            console.error(err);
+        }
+        
     }
-
-    const createOrderDetailsQuery = 'INSERT INTO orders (UserID, PaymentDetails, ShippingAddress) VALUES ($1, $2, $3)'
-    const orderDetailValues = [userID, paymentDetails, shippingAddress]
-    await pool.query(createOrderDetailsQuery, orderDetailValues)
 
 
 })

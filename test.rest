@@ -50,3 +50,20 @@ Content-type: application/json
 
 ###
 DELETE http://localhost:5000/products/3 
+
+
+###
+
+POST http://localhost:5000/orders
+Content-type: application/json
+
+{
+    "userID": 1,
+    "products": [{
+        "productID": 1,
+        "quantity": 1,
+        "price": 45.99
+    }],
+
+    "paymentDetails": "Yolo Card 67896"
+}
