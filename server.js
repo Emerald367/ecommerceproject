@@ -164,15 +164,15 @@ app.post('/orders', async (req, res) => {
         const userID = req.body.userID;
         const paymentDetails = req.body.paymentDetails;
 
-        const OrderDetailsQuery = 'INSERT INTO orders (UserID) VALUES ($1) RETURNING OrderID'
-        const orderDetailValues = [userID]
-        const result = await pool.query(OrderDetailsQuery, orderDetailValues)
-
         const saltRounds = 10
         const encryptedPaymentDetails = await bcrypt.hash(paymentDetails, saltRounds)
         const paymentInfoQuery = 'INSERT INTO paymentinfo (UserID, PaymentMethodDetails) VALUES ($1, $2)'
         const paymentValue = [userID, encryptedPaymentDetails]
         await pool.query(paymentInfoQuery, paymentValue)
+
+        const OrderDetailsQuery = 'INSERT INTO orders (UserID) VALUES ($1) RETURNING OrderID'
+        const orderDetailValues = [userID]
+        const result = await pool.query(OrderDetailsQuery, orderDetailValues)
 
         const products = req.body.products
 
@@ -180,8 +180,8 @@ app.post('/orders', async (req, res) => {
             const productID = products[i].productID
             const quantity = products[i].quantity
             const price = products[i].price
-            const orderID = result.rows[0].OrderID
-            const orderItemsQuery = 'INSERT INTO orderitems (ProductID, Quantity, Price, OrderID) VALUES ($1, $2, $3, $4) RETURNING OrderID'
+            const orderID = result.rows[0].orderid
+            const orderItemsQuery = 'INSERT INTO orderitems (ProductID, Quantity, Price, OrderID) VALUES ($1, $2, $3, $4)'
             const values = [productID, quantity, price, orderID];
             await pool.query(orderItemsQuery, values)
         }
