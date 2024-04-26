@@ -122,7 +122,7 @@ app.get('/products/:id', async (req, res) => {
     if (result.rows.length > 0) {
         res.json({product: result.rows, message: 'Product Found'})
     } else {
-        res.status(404).send('Product Found')
+        res.status(404).send('No Product Found')
     }
 })
 
@@ -196,6 +196,20 @@ app.post('/orders', async (req, res) => {
         
     }
 
+
+})
+
+app.get('/orders', async (req, res) => {
+    
+    
+    const getAllOrdersQuery = 'SELECT * FROM orders JOIN orderitems ON orders.orderID = orderitems.orderID;'
+    const result = await pool.query(getAllOrdersQuery);
+
+    if (result.rows.length > 0) {
+        res.json({orders: result.rows, message: 'All Orders Received'})
+    } else {
+        res.status(404).send('No orders created')
+    }
 
 })
 

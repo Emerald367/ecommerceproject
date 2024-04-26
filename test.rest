@@ -72,3 +72,6 @@ Content-type: application/json
 
     "paymentDetails": "Yolo Card 67896"
 }
+
+###
+GET http://localhost:5000/orders
