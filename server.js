@@ -208,9 +208,23 @@ app.get('/orders', async (req, res) => {
     if (result.rows.length > 0) {
         res.json({orders: result.rows, message: 'All Orders Received'})
     } else {
-        res.status(404).send('No orders created')
+        res.status(404).send('No orders found')
     }
 
+})
+
+app.get('/orders/:id/:id', async (req, res) => {
+    if (req.session.userID) {
+        const getSpecificOrderQuery = 'SELECT * FROM orders JOIN orderitems ON orders.orderID = orderitems.orderID WHERE UserID = $1 AND orders.orderID = $2'
+        const result = await pool.query(getSpecificOrderQuery, [req.session.userID, req.params.id])
+        if (result.rows.length > 0) {
+           res.json({orders: result.rows, message: 'Specific Order Received'})
+        } else {
+            res.status(404).send('No order found')
+        }
+    } else {
+        res.status(401).send('Unauthorized Access')
+    }
 })
 
 
