@@ -78,3 +78,6 @@ GET http://localhost:5000/orders
 
 ###
 GET http://localhost:5000/orders/1/5
+
+###
+DELETE http://localhost:5000/orders/1/5/7

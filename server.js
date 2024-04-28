@@ -227,6 +227,22 @@ app.get('/orders/:id/:id', async (req, res) => {
     }
 })
 
+app.delete('/orders/:userID/:orderID/:itemID', async (req, res) => {
+    if (req.session.userID) {
+        const deleteOrderItemsQuery = 'DELETE FROM orderitems WHERE orderID = $1 AND itemID = $2'
+        const orderItemResult = await pool.query(deleteOrderItemsQuery, [req.params.orderID, req.params.itemID])
+
+        const deleteOrderQuery = 'DELETE FROM orders WHERE userID = $1 AND orderID = $2'
+        const orderResult = await pool.query(deleteOrderQuery, [req.params.userID, req.params.orderID])
+      
+        if (orderItemResult.rowCount > 0 && orderResult.rowCount > 0) {
+            res.status(200).send('Order deleted')
+        } else {
+            res.status(404).send('No order found')
+        }
+    }
+})
+
 
 
 
