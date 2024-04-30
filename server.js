@@ -25,7 +25,7 @@ app.post('/register', async (req, res) => {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
    
-    checkEmailQuery = 'SELECT * FROM users WHERE EmailAddress = $1';
+    const checkEmailQuery = 'SELECT * FROM users WHERE EmailAddress = $1';
     const result = await pool.query(checkEmailQuery, [email]);
 
     if (result.rows.length > 0) {  
@@ -33,6 +33,7 @@ app.post('/register', async (req, res) => {
    } else {  
     const query = 'INSERT INTO users (HashedPassword, EmailAddress, ShippingAddress) VALUES ($1, $2, $3)'  
     const values = [hashedPassword, email, shippingAddress];  
+
     try {  
         await pool.query(query, values);  
         res.status(200).send('Registration Successful');  
@@ -230,12 +231,12 @@ app.get('/orders/:id/:id', async (req, res) => {
 app.delete('/orders/:userID/:orderID/:itemID', async (req, res) => {
     if (req.session.userID) {
         const deleteOrderItemsQuery = 'DELETE FROM orderitems WHERE orderID = $1 AND itemID = $2'
-        const orderItemResult = await pool.query(deleteOrderItemsQuery, [req.params.orderID, req.params.itemID])
+        const deleteOrderItemResult = await pool.query(deleteOrderItemsQuery, [req.params.orderID, req.params.itemID])
 
         const deleteOrderQuery = 'DELETE FROM orders WHERE userID = $1 AND orderID = $2'
-        const orderResult = await pool.query(deleteOrderQuery, [req.params.userID, req.params.orderID])
+        const deleteOrderResult = await pool.query(deleteOrderQuery, [req.params.userID, req.params.orderID])
       
-        if (orderItemResult.rowCount > 0 && orderResult.rowCount > 0) {
+        if (deleteOrderItemResult.rowCount > 0 && deleteOrderResult.rowCount > 0) {
             res.status(200).send('Order deleted')
         } else {
             res.status(404).send('No order found')
