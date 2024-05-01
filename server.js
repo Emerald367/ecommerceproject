@@ -11,6 +11,10 @@ app.use(expSession({
     resave: false,
     saveUninitialized: false
 }))
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json')
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+
 const PORT = 5000;
 
 connectToDb()
