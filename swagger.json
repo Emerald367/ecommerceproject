@@ -1,0 +1,50 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "E-Commerce",
+        "description": "An API that has all the features an E-Commerce Store would have"
+    },
+    "paths": {
+        "/register": {
+            "post": {
+                "summary": "Registers a new user",
+                "parameters": [
+                   {
+                    "name": "body",
+                    "in": "body",
+                    "required": true,
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "email": {
+                                "type": "string",
+                                "description": "User Email"
+                            },
+                            "shippingAddress": {
+                                "type": "string",
+                                "description": "User Shipping Address"
+                            },
+                            "password": {
+                                "type": "string",
+                                "description": "User Password (Will be hashed when request is sent)"
+                            }
+                        }
+                    }
+                   }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Registration Successful"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    },
+                    "400": {
+                        "description": "Email is already in use"
+                    }
+                }
+            }
+        }
+    }
+}
