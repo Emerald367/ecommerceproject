@@ -8,7 +8,7 @@
     "paths": {
         "/register": {
             "post": {
-                "summary": "Registers a new user",
+                "summary": "Registers a new user and stores user information in a database",
                 "parameters": [
                    {
                     "name": "body",
@@ -42,6 +42,42 @@
                     },
                     "400": {
                         "description": "Email is already in use"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "summary": "Allows a user to login. It checks registration by checking if the password they placed to register is the same as the one they're logging in with.",
+                "parameters": [
+                   {
+                      "name": "body",
+                      "in": "body",
+                      "required": true,
+                      "schema": {
+                        "type": "object",
+                        "properties": {
+                            "userID": {
+                                "type": "integer",
+                                "description": "User ID"
+                            },
+                            "password": {
+                                "type": "string",
+                                "description": "password of the registered user"
+                            }
+                        }
+                      }
+                   }
+                ], 
+                "responses": {
+                    "200": {
+                        "description": "Matching Passwords"
+                    },
+                    "403": {
+                        "description": "Incorrect Password"
+                    },
+                    "404": {
+                        "description": "User not found"
                     }
                 }
             }
