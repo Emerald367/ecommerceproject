@@ -81,6 +81,37 @@
                     }
                 }
             }
+        },
+        "/users:id": {
+            "get": {
+                "summary": "Allows a registered user to retrieve their profile information",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "profile": {
+                                    "type": "object",
+                                    "description": "User profile data"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "description": "Response message"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                       "description": "Session not created"
+                    }
+                }
+            }
         }
     }
 }
