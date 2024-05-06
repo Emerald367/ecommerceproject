@@ -311,6 +311,29 @@
                         "description": "Order Created"
                     }
                 }
+            },
+            "get": {
+                "summary": "Retrieves all orders in the database",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "orders": {
+                                    "type": "object",
+                                    "description": "All Orders"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "description": "All Orders Received"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No orders found"
+                    }
+                }
             }
         }
     }
