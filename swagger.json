@@ -335,6 +335,47 @@
                     }
                 }
             }
+        },
+        "/orders/{id1}/{id2}": {
+            "get": {
+               "parameters": [
+                {
+                    "name": "id1",
+                    "in": "path",
+                    "required": true,
+                    "type": "integer"
+                },
+                {
+                    "name": "id2",
+                    "in": "path",
+                    "required": true,
+                    "type": "integer"
+                }
+               ],
+               "responses": {
+                "200": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "orders": {
+                                "type": "object",
+                                "description": "Specific Order"
+                            },
+                            "message": {
+                                "type": "string",
+                                "description": "Specific Order Received"
+                            }
+                        }
+                    }
+                },
+                "404": {
+                    "description": "No order found"
+                },
+                "401": {
+                    "description": "Unauthorized Access"
+                }
+               }
+            }
         }
     }
 }
