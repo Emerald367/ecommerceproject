@@ -247,6 +247,25 @@
                         "description": "No Product Found"
                     }
                 }
+            },
+            "delete": {
+                "summary": "Deletes a specific product",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product Deleted"
+                    },
+                    "404": {
+                        "description": "No Product Found"
+                    }
+                }
             }
         }
     }
