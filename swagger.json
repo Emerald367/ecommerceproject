@@ -208,6 +208,45 @@
                         "description": "No Product Found"
                     }
                 }
+            },
+            "put": {
+                "summary": "Updates the information of a specific product",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "updatedName": {
+                                    "type": "string"
+                                },
+                                "updatedDesc": {
+                                    "type": "string"
+                                },
+                                "updatedPrice": {
+                                    "type": "number",
+                                    "format": "double"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product Updated"
+                    },
+                    "404": {
+                        "description": "No Product Found"
+                    }
+                }
             }
         }
     }
