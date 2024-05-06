@@ -82,7 +82,7 @@
                 }
             }
         },
-        "/users:id": {
+        "/users/{id}": {
             "get": {
                 "summary": "Allows a registered user to retrieve their profile information",
                 "parameters": [
@@ -154,7 +154,7 @@
                 }
             }
         },
-        "/products/:id": {
+        "/products/{id}": {
             "get": {
                 "summary": "Getting a specific product based on its ID in the database",
                 "parameters": [
