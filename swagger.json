@@ -152,6 +152,29 @@
                         "description": "Product already created"
                     }
                 }
+            },
+            "get": {
+                "summary": "Retrieves all the products created in the database",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "products": {
+                                    "type": "object",
+                                    "description": "All Products"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "description": "All Products Received"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No Product Found"
+                    }
+                }
             }
         },
         "/products/{id}": {
