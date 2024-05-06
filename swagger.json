@@ -338,6 +338,7 @@
         },
         "/orders/{id1}/{id2}": {
             "get": {
+                "summary": "Retreives a specific order in the database",
                "parameters": [
                 {
                     "name": "id1",
