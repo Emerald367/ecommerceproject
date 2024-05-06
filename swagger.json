@@ -154,7 +154,7 @@
                 }
             }
         },
-        "/products:id": {
+        "/products/:id": {
             "get": {
                 "summary": "Getting a specific product based on its ID in the database",
                 "parameters": [
