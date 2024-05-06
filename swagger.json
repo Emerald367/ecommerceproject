@@ -267,6 +267,51 @@
                     }
                 }
             }
+        },
+        "/orders": {
+            "post": {
+                "summary": "Creates an order that gets stored in the database",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "userID": {
+                                    "type": "integer"
+                                },
+                                "products": {
+                                    "type": "array",
+                                    "items:": {
+                                        "type": "object",
+                                        "properties": {
+                                            "productID": {
+                                                "type": "integer"
+                                            },
+                                            "quantity": {
+                                                "type": "integer"
+                                            },
+                                            "price": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    }
+                                },
+                                "paymentDetails": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Order Created"
+                    }
+                }
+            }
         }
     }
 }
