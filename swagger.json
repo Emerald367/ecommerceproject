@@ -377,6 +377,39 @@
                 }
                }
             }
+        },
+        "/orders/{userID}/{orderID}/{itemID}": {
+            "delete": {
+                "summary": "Deletes an order from the database",
+                "parameters": [
+                    {
+                        "name": "userID",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "orderID",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "itemID",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Order deleted"
+                    },
+                    "404": {
+                        "description": "No order found"
+                    }
+                }
+            }
         }
     }
 }
