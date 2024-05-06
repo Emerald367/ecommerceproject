@@ -88,7 +88,9 @@
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "path"
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -102,13 +104,85 @@
                                 },
                                 "message": {
                                     "type": "string",
-                                    "description": "Response message"
+                                    "description": "User Profile Received"
                                 }
                             }
                         }
                     },
                     "404": {
                        "description": "Session not created"
+                    }
+                }
+            }
+        },
+        "/products": {
+            "post": {
+                "summary": "Creates a product and stores it in the database",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "productName": {
+                                    "type": "string"
+                                },
+                                "productDesc": {
+                                    "type": "string"
+                                },
+                                "productPrice": {
+                                    "type": "number",
+                                    "format": "double"
+                                }
+                            }
+                            
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product Created"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    },
+                    "400": {
+                        "description": "Product already created"
+                    }
+                }
+            }
+        },
+        "/products:id": {
+            "get": {
+                "summary": "Getting a specific product based on its ID in the database",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "product": {
+                                    "type": "object",
+                                    "description": "Specific Product"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "description": "Product Found"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No Product Found"
                     }
                 }
             }
